@@ -99,7 +99,7 @@ ask_yes_no() {
     fi
 
     prompt "$question $hint"
-    read -r response
+    read -r response < /dev/tty
     response="${response:-$default}"
 
     case "$response" in
@@ -117,7 +117,7 @@ ask_input() {
 
     prompt "$question"
     printf "%s" "$hint"
-    read -r response
+    read -r response < /dev/tty
     echo "${response:-$default}"
 }
 
@@ -174,7 +174,7 @@ run_wizard() {
     echo ""
     printf "  ${DIM}Example: https://anthropic.company.com${NC}\n"
     printf "  "
-    read -r base_url
+    read -r base_url < /dev/tty
     if [[ -n "$base_url" ]]; then
         local safe_base_url
         safe_base_url=$(sanitize_for_shell "$base_url")
@@ -190,7 +190,7 @@ run_wizard() {
         echo ""
         printf "  ${DIM}Example: ~/certs/ca.pem${NC}\n"
         printf "  "
-        read -r ca_cert
+        read -r ca_cert < /dev/tty
         if [[ -n "$ca_cert" ]]; then
             # Expand ~ to $HOME
             ca_cert="${ca_cert/#\~/$HOME}"
